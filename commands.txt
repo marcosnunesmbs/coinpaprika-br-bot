@@ -1,0 +1,7 @@
+price - Comando + SÍMBOLO [QUANTIA] = Retorna a cotação do simbolo escolhido. QUANTIA opcional.
+convert - Comando + VALOR + BASE + COTAÇÃO  = Retorna a cotação total de uma moeda na cotação determinada.
+buy - Comando + QUANTIDADE + BASE + COTAÇÃO + SPREAD  = Retorna a quantia de moedas a ser compradas com agil para baixo.
+sell - Comando + QUANTIDADE + BASE + COTAÇÃO + SPREAD  = Retorna a quantia de moedas a ser vendida com agil para cima.
+brlbuy - Comando + QUANTIDADE DE REAIS + CRIPTO + SPREAD  = Retorna a quantidade de moedas a serem compradas a partir da quantidade de reais e ágil para baixo.
+brlsell - Comando + QUANTIDADE DE REAIS + CRIPTO + SPREAD  = Retorna a quantidade de moedas a serem vendidas a partir da quantidade de reais e ágil para cima.
+help - Obtenha ajuda.
