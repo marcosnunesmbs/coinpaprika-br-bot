@@ -1,5 +1,6 @@
 const axios = require('axios')
 const coins = require('./coins.json')
+var moment = require('moment')
 
 var filter  = (symbol) => {
     let obj = coins.find(a=>a.symbol === symbol.toUpperCase())
@@ -47,7 +48,7 @@ var CPP = {
             .then(function (response) {
                 let f = fixed(response.data.quotes.BRL.price)
                 resolve(
-                `== Cotação ${value} ${response.data.name} ===\n` + 
+                `=== Cotação ${value} ${response.data.name} ===\n` + 
                 `BRL:  R$  ${parseFloat((response.data.quotes.BRL.price * value)).toFixed(f)} (${response.data.quotes.BRL.percent_change_24h}%) ${emoji(response.data.quotes.BRL.percent_change_24h)}\n\n` +
                 `USD:  $   ${parseFloat((response.data.quotes.USD.price * value)).toFixed(f)} (${response.data.quotes.USD.percent_change_24h}%) ${emoji(response.data.quotes.USD.percent_change_24h)}\n` + 
                 `GBP:  £   ${parseFloat((response.data.quotes.GBP.price * value)).toFixed(f)} (${response.data.quotes.GBP.percent_change_24h}%) ${emoji(response.data.quotes.GBP.percent_change_24h)}\n` +
@@ -56,10 +57,11 @@ var CPP = {
                 `\nVol. 24h: $ ${parseFloat(response.data.quotes.USD.volume_24h).toFixed(2)} 📈\n` +
                 `\nSuply: ${parseFloat((response.data.circulating_supply/response.data.max_supply) * 100).toFixed(2)}%` +
                 `\n${suply(response.data.max_supply, response.data.circulating_supply)}` +
-                `\n${response.data.circulating_supply} / ${response.data.max_supply}`
+                `\n${response.data.circulating_supply} / ${response.data.max_supply}`+
+                `\n\n${moment().format('DD/MM/YY HH:mm:ss')}`
                 )
             })
-            .catch(function (error) {
+            .catch(function (err) {
                 resolve('Erro ao encontrar esta moeda. Tente novamente')
             })
         })

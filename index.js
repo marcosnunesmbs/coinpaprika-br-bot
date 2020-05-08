@@ -2,6 +2,15 @@ const env = require('./.env');
 const Telegraf  = require('telegraf');
 const bot = new Telegraf(env.token);
 const CPP = require('./src/cpp.js');
+const Extra = require('telegraf/extra');
+const Markup = require('telegraf/markup');
+
+
+const refreshBtn = (c, v) => 
+    Extra.markup(Markup.inlineKeyboard([
+        Markup.callbackButton('Atualizar', `refresh ${c} ${v}`)
+    ]))
+
 
 bot.start(ctx => {
     const from = ctx.update.message.from;
@@ -23,9 +32,9 @@ bot.command('price', ctx => {
     if (props.length < 2) {
         ctx.reply('Informe o símbolo que deseja após o comando /price')
     } else {
-        let value = props[2] ? props[2] : 1
+        var value = props[2] ? props[2] : 1
         CPP.getPrice(props[1], value)
-            .then(resp => ctx.reply(resp))
+            .then(resp => ctx.reply(resp.replace(".", ","), refreshBtn(props[1], value)))
     }
 })
 
@@ -35,7 +44,7 @@ bot.command('sell', ctx => {
         ctx.reply('Informe quantidade, base, cotação e spread que deseja após o comando /sell')
     } else {
         CPP.sellPrice(props[1], props[2], props[3], props[4])
-            .then(resp => ctx.reply(resp))
+            .then(resp => ctx.reply(resp.replace(".", ",")))
     }
 })
 
@@ -45,7 +54,7 @@ bot.command('buy', ctx => {
         ctx.reply('Informe quantidade, base, cotação e spread que deseja após o comando /buy')
     } else {
         CPP.buyPrice(props[1], props[2], props[3], props[4])
-            .then(resp => ctx.reply(resp))
+            .then(resp => ctx.reply(resp.replace(".", ",")))
     }
 })
 
@@ -55,7 +64,7 @@ bot.command('brlsell', ctx => {
         ctx.reply('Informe quantidade em BRL, cripto e spread que deseja após o comando /brlsell')
     } else {
         CPP.brlsell(props[1], props[2], props[3])
-            .then(resp => ctx.reply(resp))
+            .then(resp => ctx.reply(resp.replace(".", ",")))
     }
 })
 
@@ -65,7 +74,7 @@ bot.command('brlbuy', ctx => {
         ctx.reply('Informe quantidade em BRL, cripto e spread que deseja após o comando /brlbuy')
     } else {
         CPP.brlbuy(props[1], props[2], props[3])
-            .then(resp => ctx.reply(resp))
+            .then(resp => ctx.reply(resp.replace(".", ",")))
     }
 })
 
@@ -75,7 +84,7 @@ bot.command('convert', ctx => {
         ctx.reply('Informe o valor, a base e a cotação que deseja após o comando /convert')
     } else {
         CPP.convert(props[1], props[2], props[3])
-            .then(resp => ctx.reply(resp))
+            .then(resp => ctx.reply(resp.replace(".", ",")))
     }
 })
 bot.command('help', ctx => {
@@ -89,6 +98,15 @@ bot.command('help', ctx => {
     \n/brlbuy QUANTIDADE DE REAIS + CRIPTO + SPREAD  = Retorna a quantidade de moedas a serem compradas a partir da quantidade de reais e ágil para baixo.
     \n/brlsell QUANTIDADE DE REAIS + CRIPTO + SPREAD  = Retorna a quantidade de moedas a serem vendidas a partir da quantidade de reais e ágil para cima.`
     ctx.reply(message)
+})
+
+bot.action(/refresh (\w+) (\w+)/, ctx => {
+    var coin = ctx.match[1]
+    var amount = ctx.match[2]
+
+    CPP.getPrice(coin, parseInt(amount))
+        .then(resp => ctx.editMessageText( resp.replace(".", ","), refreshBtn(coin, parseInt(amount)) ).catch( function(error){ return } ) )
+        
 })
 
 bot.startPolling()
