@@ -63,7 +63,8 @@ var CPP = {
                 `\n\n🕒${moment().format('DD/MM/YY HH:mm:ss')}`
                 )
             })
-            .catch(function (err) {
+            .catch(function (error) {
+                 
                 resolve('Erro ao encontrar esta moeda. Tente novamente')
             })
         })
@@ -83,6 +84,7 @@ var CPP = {
                 )
             })
             .catch(function (error) {
+                 
                 resolve('Erro  na conversão. Tente novamente')
             })
         })
@@ -109,6 +111,7 @@ var CPP = {
                 
             })
             .catch(function (error) {
+                 
                 resolve('Erro  ao calcular. Tente novamente')
             })
         })
@@ -135,6 +138,7 @@ var CPP = {
                 
             })
             .catch(function (error) {
+                 
                 resolve('Erro  ao calcular. Tente novamente')
             })
         })
@@ -146,9 +150,9 @@ var CPP = {
             let bc = filter(cripto)
             axios.get(`https://api.coinpaprika.com/v1/tickers/${bc}?quotes=BRL`)
                 .then((resp) => {
-                    let quote = resp.data.quotes.BRL.price * (1 + (spread/100))
+                    let quote = parseFloat(resp.data.quotes.BRL.price) * (1 + (spread/100))
                     let total = amount/quote
-                    let coust = resp.data.quotes.BRL.price * total
+                    let coust = parseFloat(resp.data.quotes.BRL.price) * total
                     resolve(
                         `=== Venda de R$ ${amount} em ${cripto.toUpperCase()} ===` + 
                         `\nCotação: R$ ${parseFloat(quote).toFixed(fixed(quote))}` +
@@ -159,6 +163,7 @@ var CPP = {
                     )
                 })
                 .catch(function (error) {
+                     
                     resolve('Erro  ao calcular. Tente novamente')
                 })
         })
@@ -182,6 +187,7 @@ var CPP = {
                     )
                 })
                 .catch(function (error) {
+                     
                     resolve('Erro  ao calcular. Tente novamente')
                 })
         })
