@@ -19,8 +19,10 @@ var emoji = (value) => {
         return '☺️';
     } else if (value >= 5 && value < 10) {
         return '😍'
-    }else {
+    }else if (value >= 10 && value < 20) {
         return '🚀';
+    }else {
+        return '🌙';
     }
 }
 
@@ -48,7 +50,7 @@ var CPP = {
             .then(function (response) {
                 let f = fixed(response.data.quotes.BRL.price)
                 resolve(
-                `=== Cotação ${value} ${response.data.name} ===\n` + 
+                `===== Cotação ${value} ${response.data.name} =====\n` + 
                 `BRL:  R$  ${parseFloat((response.data.quotes.BRL.price * value)).toFixed(f)} (${response.data.quotes.BRL.percent_change_24h}%) ${emoji(response.data.quotes.BRL.percent_change_24h)}\n\n` +
                 `USD:  $   ${parseFloat((response.data.quotes.USD.price * value)).toFixed(f)} (${response.data.quotes.USD.percent_change_24h}%) ${emoji(response.data.quotes.USD.percent_change_24h)}\n` + 
                 `GBP:  £   ${parseFloat((response.data.quotes.GBP.price * value)).toFixed(f)} (${response.data.quotes.GBP.percent_change_24h}%) ${emoji(response.data.quotes.GBP.percent_change_24h)}\n` +
@@ -58,7 +60,7 @@ var CPP = {
                 `\nSuply: ${parseFloat((response.data.circulating_supply/response.data.max_supply) * 100).toFixed(2)}%` +
                 `\n${suply(response.data.max_supply, response.data.circulating_supply)}` +
                 `\n${response.data.circulating_supply} / ${response.data.max_supply}`+
-                `\n\n${moment().format('DD/MM/YY HH:mm:ss')}`
+                `\n\n🕒${moment().format('DD/MM/YY HH:mm:ss')}`
                 )
             })
             .catch(function (err) {
@@ -73,9 +75,11 @@ var CPP = {
             let qc = filter(quote)
             axios.get(`https://api.coinpaprika.com/v1/price-converter?base_currency_id=${bc}&quote_currency_id=${qc}&amount=${amount}`)
             .then(function (response) {
+                let f = fixed(response.data.price)
                 resolve(
                 `=== Conversão ${amount} ${base.toUpperCase()}/${quote.toUpperCase()} ===\n` + 
-                `${amount} ${base.toUpperCase()} = ${response.data.price} ${quote.toUpperCase()}`
+                `${amount} ${base.toUpperCase()} ↪️ ${parseFloat(response.data.price).toFixed(f)} ${quote.toUpperCase()}`+
+                `\n\n🕒${moment().format('DD/MM/YY HH:mm:ss')}`
                 )
             })
             .catch(function (error) {
@@ -98,7 +102,8 @@ var CPP = {
                     resolve(
                     `=== Venda de ${amount} ${base.toUpperCase()} + ${spread}% ===` + 
                     `\n${quote.toUpperCase()}: ${parseFloat(response.data.price * up).toFixed(f)}`+
-                    `\nR$ ${parseFloat((response.data.price * up) * resp.data.quotes.BRL.price).toFixed(2)}`
+                    `\nR$ ${parseFloat((response.data.price * up) * resp.data.quotes.BRL.price).toFixed(2)}`+
+                    `\n\n🕒${moment().format('DD/MM/YY HH:mm:ss')}`
                     )
                 })
                 
@@ -123,7 +128,8 @@ var CPP = {
                     resolve(
                     `=== Compra de ${amount} ${base.toUpperCase()} - ${spread}% ===` + 
                     `\n${quote.toUpperCase()}: ${parseFloat(response.data.price * up).toFixed(f)}`+
-                    `\nR$ ${parseFloat((response.data.price * up) * resp.data.quotes.BRL.price).toFixed(2)}`
+                    `\nR$ ${parseFloat((response.data.price * up) * resp.data.quotes.BRL.price).toFixed(2)}`+
+                    `\n\n🕒${moment().format('DD/MM/YY HH:mm:ss')}`
                     )
                 })
                 
@@ -145,10 +151,11 @@ var CPP = {
                     let coust = resp.data.quotes.BRL.price * total
                     resolve(
                         `=== Venda de R$ ${amount} em ${cripto.toUpperCase()} ===` + 
-                        `\nCotação: R$${parseFloat(quote).toFixed(fixed(quote))}` +
+                        `\nCotação: R$ ${parseFloat(quote).toFixed(fixed(quote))}` +
                         `\nTotal: ${parseFloat(total).toFixed(fixed(total))} ${cripto.toUpperCase()}` +
                         `\n\nCusto: R$ ${parseFloat(coust).toFixed(2)}🔥️`+
-                        `\nLucro: R$ ${parseFloat(amount - coust).toFixed(2)}👍`
+                        `\nLucro: R$ ${parseFloat(amount - coust).toFixed(2)}👍`+
+                        `\n\n🕒${moment().format('DD/MM/YY HH:mm:ss')}`
                     )
                 })
                 .catch(function (error) {
@@ -168,9 +175,10 @@ var CPP = {
                     let coust = resp.data.quotes.BRL.price * total
                     resolve(
                         `=== Compra de R$ ${amount} em ${cripto.toUpperCase()} ===` + 
-                        `\nCotação: R$${parseFloat(quote).toFixed(fixed(quote))}` +
+                        `\nCotação: R$ ${parseFloat(quote).toFixed(fixed(quote))}` +
                         `\nTotal: ${parseFloat(total).toFixed(fixed(total))} ${cripto.toUpperCase()}🔥`+
-                        `\n\nEconomia: R$ ${parseFloat(amount - coust).toFixed(2)}👍`
+                        `\n\nEconomia: R$ ${parseFloat(amount - coust).toFixed(2)}👍`+
+                        `\n\n🕒${moment().format('DD/MM/YY HH:mm:ss')}`
                     )
                 })
                 .catch(function (error) {
