@@ -26,7 +26,7 @@ var emoji = (value) => {
     }
 }
 
-var suply = (max, actual) => {
+var supply = (max, actual) => {
     let percent = parseInt((actual/max) * 10);
     var chart = '';
     for (var i = 0; i < 1; i++) {
@@ -57,8 +57,8 @@ var CPP = {
                 `EUR:  €   ${parseFloat((response.data.quotes.EUR.price * value)).toFixed(f)} (${response.data.quotes.EUR.percent_change_24h}%) ${emoji(response.data.quotes.EUR.percent_change_24h)}\n` +
                 `\n${parseFloat((response.data.quotes.BTC.price * value)).toFixed(8)} ₿ (${response.data.quotes.BTC.percent_change_24h}%) ${emoji(response.data.quotes.BTC.percent_change_24h)}\n` +
                 `\nVol. 24h: $ ${parseFloat(response.data.quotes.USD.volume_24h).toFixed(2)} 📈\n` +
-                `\nSuply: ${parseFloat((response.data.circulating_supply/response.data.max_supply) * 100).toFixed(2)}%` +
-                `\n${suply(response.data.max_supply, response.data.circulating_supply)}` +
+                `\nSupply: ${parseFloat((response.data.circulating_supply/response.data.max_supply) * 100).toFixed(2)}%` +
+                `\n${supply(response.data.max_supply, response.data.circulating_supply)}` +
                 `\n${response.data.circulating_supply} / ${response.data.max_supply}`+
                 `\n\n🕒${moment().format('DD/MM/YY HH:mm:ss')}`
                 )
