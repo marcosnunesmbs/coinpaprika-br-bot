@@ -1,6 +1,6 @@
 const env = require('./.env');
 const Telegraf  = require('telegraf');
-const bot = new Telegraf(env.token);
+const bot = new Telegraf(BOT_TOKEN);
 const CPP = require('./src/cpp.js');
 const Extra = require('telegraf/extra');
 const Markup = require('telegraf/markup');
@@ -121,7 +121,7 @@ bot.command('convert', ctx => {
 
 bot.action(/refresh (\w+) (\w+)/, ctx => {
     var coin = ctx.match[1]
-    var amount = ctx.match[2]
+    var amount = ctx.match.input.split(' ')[2]
 
     CPP.getPrice(coin, parseFloat(amount))
         .then(resp => ctx.editMessageText( resp.replace(  /\./g, ","), refreshBtn(coin, parseFloat(amount)) ).catch( () => { return } ) )
