@@ -182,6 +182,6 @@ app.get('/', function (req, res) {
     res.send('welcome to CPP-BR-BOT!');
 });
 
-app.listen(80, function () {
+app.listen(8080, function () {
     console.log('Bot listening on port 5000!');
 });
