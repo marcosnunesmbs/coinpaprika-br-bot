@@ -4,7 +4,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 const CPP = require('./src/cpp.js');
 const Extra = require('telegraf/extra');
 const Markup = require('telegraf/markup');
-
+var express = require('express')
 
 const refreshBtn = (c, v) => 
     Extra.markup(Markup.inlineKeyboard([
@@ -174,3 +174,14 @@ bot.action(/refresh (\w+) (\w+)/, ctx => {
 // })
 
 bot.startPolling()
+
+var app = express()
+app.use(express.json())
+
+app.get('/', function (req, res) {
+    res.send('welcome to CPP-BR-BOT!');
+});
+
+app.listen(5000, function () {
+    console.log('Bot listening on port 5000!');
+});
