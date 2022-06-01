@@ -46,15 +46,15 @@ var CPP = {
     getPrice: (coin, value) => {
         return new Promise(function(resolve, reject) {
             let id = filter(coin)
-            axios.get(`https://api.coinpaprika.com/v1/tickers/${id}?quotes=USD,BRL,BTC,GBP,EUR`)
+            axios.get(`https://api.coinpaprika.com/v1/tickers/${id}?quotes=USD,BRL,BTC`)
             .then(function (response) {
                 let f = fixed(response.data.quotes.BRL.price)
                 resolve(
                 `===== Cotação ${value} ${response.data.name} =====\n` + 
                 `BRL:  R$  ${parseFloat((response.data.quotes.BRL.price * value)).toFixed(f)} (${response.data.quotes.BRL.percent_change_24h}%) ${emoji(response.data.quotes.BRL.percent_change_24h)}\n\n` +
                 `USD:  $   ${parseFloat((response.data.quotes.USD.price * value)).toFixed(f)} (${response.data.quotes.USD.percent_change_24h}%) ${emoji(response.data.quotes.USD.percent_change_24h)}\n` + 
-                `GBP:  £   ${parseFloat((response.data.quotes.GBP.price * value)).toFixed(f)} (${response.data.quotes.GBP.percent_change_24h}%) ${emoji(response.data.quotes.GBP.percent_change_24h)}\n` +
-                `EUR:  €   ${parseFloat((response.data.quotes.EUR.price * value)).toFixed(f)} (${response.data.quotes.EUR.percent_change_24h}%) ${emoji(response.data.quotes.EUR.percent_change_24h)}\n` +
+                // `GBP:  £   ${parseFloat((response.data.quotes.GBP.price * value)).toFixed(f)} (${response.data.quotes.GBP.percent_change_24h}%) ${emoji(response.data.quotes.GBP.percent_change_24h)}\n` +
+                // `EUR:  €   ${parseFloat((response.data.quotes.EUR.price * value)).toFixed(f)} (${response.data.quotes.EUR.percent_change_24h}%) ${emoji(response.data.quotes.EUR.percent_change_24h)}\n` +
                 `\n${parseFloat((response.data.quotes.BTC.price * value)).toFixed(8)} ₿ (${response.data.quotes.BTC.percent_change_24h}%) ${emoji(response.data.quotes.BTC.percent_change_24h)}\n` +
                 `\nVol. 24h: $ ${parseFloat(response.data.quotes.USD.volume_24h).toFixed(2)} 📈\n` +
                 `\nSupply: ${parseFloat((response.data.circulating_supply/response.data.max_supply) * 100).toFixed(2)}%` +
