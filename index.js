@@ -1,6 +1,5 @@
-const env = require('./.env');
 const Telegraf  = require('telegraf');
-const bot = new Telegraf(BOT_TOKEN);
+const bot = new Telegraf(process.env.BOT_TOKEN);
 const CPP = require('./src/cpp.js');
 const Extra = require('telegraf/extra');
 const Markup = require('telegraf/markup');
