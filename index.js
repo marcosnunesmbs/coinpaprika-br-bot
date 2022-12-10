@@ -10,26 +10,6 @@ const refreshBtn = (c, v) =>
     Extra.markup(Markup.inlineKeyboard([
         Markup.callbackButton('♻️ Atualizar ♻️', `refresh ${c} ${parseFloat(v)}`)
     ]))
-// const refreshSellBtn = (q, b, c , s) => 
-//     Extra.markup(Markup.inlineKeyboard([
-//         Markup.callbackButton('♻️ Atualizar ♻️', `refreshSell ${q} ${b} ${c} ${s}`)
-//     ]))
-// const refreshBuyBtn = (q, b, c , s) => 
-//     Extra.markup(Markup.inlineKeyboard([
-//         Markup.callbackButton('♻️ Atualizar ♻️', `refreshBuy ${q} ${b} ${c} ${s}`)
-//     ]))
-// const refreshBrlsellBtn = (q, c, s) => 
-//     Extra.markup(Markup.inlineKeyboard([
-//         Markup.callbackButton('♻️ Atualizar ♻️', `refreshBrlsell ${q} ${c} ${s}`)
-//     ]))
-// const refreshBrlbuyBtn = (q, c, s) => 
-//     Extra.markup(Markup.inlineKeyboard([
-//         Markup.callbackButton('♻️ Atualizar ♻️', `refreshBrlbuy ${q} ${c} ${s}`)
-//     ]))
-// const refreshConvert = (q, c, s) => 
-//     Extra.markup(Markup.inlineKeyboard([
-//         Markup.callbackButton('♻️ Atualizar ♻️', `refreshConvert ${q} ${c} ${s}`)
-//     ]))
 
 bot.start(ctx => {
     const from = ctx.update.message.from;
@@ -43,6 +23,7 @@ bot.start(ctx => {
     \n/brlbuy <quantidade> <cripto> <spread> = Retorna a quantidade de moedas a serem compradas a partir da quantidade de reais e ágil para baixo.
     \n/brlsell <quantidade> <cripto> <spread> = Retorna a quantidade de moedas a serem vendidas a partir da quantidade de reais e ágil para cima.`
     ctx.reply(message)
+    .catch((err) => console.log(err))
 })
 
 bot.command('help', ctx => {
@@ -56,6 +37,7 @@ bot.command('help', ctx => {
     \n/brlbuy <quantidade> <cripto> <spread> = Retorna a quantidade de moedas a serem compradas a partir da quantidade de reais e ágil para baixo.
     \n/brlsell <quantidade> <cripto> <spread> = Retorna a quantidade de moedas a serem vendidas a partir da quantidade de reais e ágil para cima.`
     ctx.reply(message)
+    .catch((err) => console.log(err))
 })
 
 bot.command('price', ctx => {
@@ -66,6 +48,7 @@ bot.command('price', ctx => {
         var value = props[2] ? props[2] : 1
         CPP.getPrice(props[1], parseFloat(value))
             .then(resp => ctx.reply(resp.replace(  /\./g, ","), refreshBtn(props[1], parseFloat(value))))
+            .catch((err) => console.log(err))
     }
 })
 
@@ -76,6 +59,7 @@ bot.command('sell', ctx => {
     } else {
         CPP.sellPrice(props[1], props[2], props[3], props[4])
             .then(resp => ctx.reply(resp.replace(  /\./g, ",")))
+            .catch((err) => console.log(err))
     }
 })
 
@@ -86,6 +70,7 @@ bot.command('buy', ctx => {
     } else {
         CPP.buyPrice(props[1], props[2], props[3], props[4])
             .then(resp => ctx.reply(resp.replace(  /\./g, ",")))
+            .catch((err) => console.log(err))
     }
 })
 
@@ -96,6 +81,7 @@ bot.command('brlsell', ctx => {
     } else {
         CPP.brlsell(props[1], props[2], props[3])
             .then(resp => ctx.reply(resp.replace(  /\./g, ",")))
+            .catch((err) => console.log(err))
     }
 })
 
@@ -106,6 +92,7 @@ bot.command('brlbuy', ctx => {
     } else {
         CPP.brlbuy(props[1], props[2], props[3])
             .then(resp => ctx.reply(resp.replace(  /\./g, ",")))
+            .catch((err) => console.log(err))
     }
 })
 
@@ -116,6 +103,7 @@ bot.command('convert', ctx => {
     } else {
         CPP.convert(props[1], props[2], props[3])
             .then(resp => ctx.reply(resp.replace(  /\./g, ",")))
+            .catch((err) => console.log(err))
     }
 })
 
@@ -124,54 +112,10 @@ bot.action(/refresh (\w+) (\w+)/, ctx => {
     var amount = ctx.match.input.split(' ')[2]
 
     CPP.getPrice(coin, parseFloat(amount))
-        .then(resp => ctx.editMessageText( resp.replace(  /\./g, ","), refreshBtn(coin, parseFloat(amount)) ).catch( () => { return } ) )
+        .then(resp => ctx.editMessageText( resp.replace(  /\./g, ","), refreshBtn(coin, parseFloat(amount)) )
+        .catch( () => { return } ) ).catch((err) => console.log(err))
 })
 
-// bot.action(/refreshSell (\w+) (\w+) (\w+) (\w+)/, ctx => {
-//     var q = ctx.match[1]
-//     var b = ctx.match[2]
-//     var c = ctx.match[3]
-//     var s = ctx.match[4]
-
-//     CPP.sellPrice(q, b, c, s)
-//         .then(resp => ctx.editMessageText( resp.replace(  /\./g, ","), refreshSellBtn(q, b, c, s)).catch( () => { return } ) )
-// })
-
-// bot.action(/refreshBuy (\w+) (\w+) (\w+) (\w+)/, ctx => {
-//     var q = ctx.match[1]
-//     var b = ctx.match[2]
-//     var c = ctx.match[3]
-//     var s = ctx.match[4]
-
-//     CPP.buyPrice(q, b, c, s)
-//         .then(resp => ctx.editMessageText( resp.replace(  /\./g, ","), refreshBuyBtn(q, b, c, s)).catch( () => { return } ) )
-// })
-
-// bot.action(/refreshBrlsell (\w+) (\w+) (\w+)/, ctx => {
-//     var q = ctx.match[1]
-//     var b = ctx.match[2]
-//     var c = ctx.match[3]
-
-//     CPP.brlsell(q, b, c)
-//         .then(resp => ctx.editMessageText( resp.replace(  /\./g, ","), refreshBrlsellBtn(q, b, c)).catch( () => { return } ) )
-// })
-// bot.action(/refreshBrlbuy (\w+) (\w+) (\w+)/, ctx => {
-//     var q = ctx.match[1]
-//     var b = ctx.match[2]
-//     var c = ctx.match[3]
-
-//     CPP.brlbuy(q, b, c)
-//         .then(resp => ctx.editMessageText( resp.replace(  /\./g, ","), refreshBrlbuyBtn(q, b, c)).catch( () => { return } ) )
-// })
-
-// bot.action(/refreshConvert (\w+) (\w+) (\w+)/, ctx => {
-//     var q = ctx.match[1]
-//     var b = ctx.match[2]
-//     var c = ctx.match[3]
-
-//     CPP.convert(q, b, c)
-//         .then(resp => ctx.editMessageText( resp.replace(  /\./g, ","), refreshConvert(q, b, c)).catch( () => { return } ) )
-// })
 
 bot.startPolling()
 
@@ -179,7 +123,7 @@ var app = express()
 app.use(express.json())
 
 app.get('/', function (req, res) {
-    res.send('welcome to CPP-BR-BOT!');
+    res.send('welcome to CPP-BR-BOT!').catch((err) => console.log(err))
 });
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, function () {
