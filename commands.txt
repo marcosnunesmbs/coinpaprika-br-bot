@@ -1,7 +1,7 @@
-price - Comando <símbolo> [<quantia>] = Retorna a cotação do símbolo escolhido. QUANTIA opcional.
-convert - Comando <valor> <base> <cotação> = Retorna a cotação total de uma moeda na cotação determinada.
-buy - Comando <quantidade> <base> <cotação> <spread> = Retorna a quantia de moedas a ser compradas com agil para baixo.
-sell - Comando <quantidade> <base> <cotação> <spread> = Retorna a quantia de moedas a ser vendida com agil para cima.
-brlbuy - Comando <quantidade BRL> CRIPTO <spread> = Retorna a quantidade de moedas a serem compradas a partir da quantidade de reais e ágil para baixo.
-brlsell - Comando <quantidade BRL> CRIPTO <spread> = Retorna a quantidade de moedas a serem vendidas a partir da quantidade de reais e ágil para cima.
+price - <símbolo> [<quantia>] = Retorna a cotação do símbolo escolhido. QUANTIA opcional.
+convert - <valor> <base> <cotação> = Retorna a cotação total de uma moeda na cotação determinada.
+buy - <quantidade> <base> <cotação> <spread> = Retorna a quantia de moedas a ser compradas com agil para baixo.
+sell - <quantidade> <base> <cotação> <spread> = Retorna a quantia de moedas a ser vendida com agil para cima.
+brlbuy - <quantidade BRL> CRIPTO <spread> = Retorna a quantidade de moedas a serem compradas a partir da quantidade de reais e ágil para baixo.
+brlsell - <quantidade BRL> CRIPTO <spread> = Retorna a quantidade de moedas a serem vendidas a partir da quantidade de reais e ágil para cima.
 help - Obtenha ajuda.
