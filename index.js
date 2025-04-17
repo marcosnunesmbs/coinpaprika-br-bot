@@ -14,7 +14,7 @@ const refreshBtn = (c, v) =>
 bot.start(ctx => {
     const from = ctx.update.message.from;
     let message = `
-    Seja bem-vindo ao Coinpaprika BR Bot, ${from.first_name}
+    Seja bem-vindo ao Coinpaprika BR Bot, ${from.first_name}!
     \n\nAqui vão alguns comandos disponíveis:
     \n/price <símbolo> [<quantia>] = Retorna a cotação do simbolo escolhido. QUANTIA opcional.
     \n/convert <valor> <base> <cotação> = Retorna a cotação total de uma moeda na cotação determinada.
